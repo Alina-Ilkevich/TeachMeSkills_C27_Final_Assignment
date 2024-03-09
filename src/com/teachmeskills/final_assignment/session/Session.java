@@ -26,10 +26,10 @@ public final class Session {
     }
     private void setAccessToken(){
         String symbols = "abcdefghijklmnopqrstuvwxyz0123456789";
-        String salt = new Random().ints(Consts.ACCESS_TOKEN_LENGTH,0,symbols.length())
-                                  .mapToObj(symbols :: charAt)
-                                  .map(Object :: toString)
-                                  .collect(Collectors.joining());
+        String accessToken = new Random().ints(Consts.ACCESS_TOKEN_LENGTH,0,symbols.length())
+                                         .mapToObj(symbols :: charAt)
+                                         .map(Object :: toString)
+                                         .collect(Collectors.joining());
     }
     private void setExpDate(){
         Calendar calendar = Calendar.getInstance();
