@@ -29,7 +29,7 @@ public class FileProcessingService {
     }
     public static void getOrderFiles(List<File[]> files){
         for (File[] file : files){
-           if (file)
+           //if (file)
         }
     }
 }
