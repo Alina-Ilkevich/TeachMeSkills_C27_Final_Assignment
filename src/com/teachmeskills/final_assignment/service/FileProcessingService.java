@@ -20,16 +20,15 @@ public class FileProcessingService {
     public static List<File[]> getFileNames(){
         File dir = new File(PathToFolder.PATH_TO_FOLDER);
         File[] filesInData = dir.listFiles();
-        List<File[]> files = new ArrayList<>();
-        Iterator<File[]> itr = files.iterator();
-        while (itr.hasNext()){
-            files.add(itr.next());
+        List<File[]> allFiles = new ArrayList<>();
+        for (File file : filesInData){
+            if (file.isDirectory()){
+                allFiles.add(file.listFiles());
+            } /*else {
+                allFiles.add(file);
+            }*/
         }
-        return files;
+        return allFiles;
     }
-    public static void getOrderFiles(List<File[]> files){
-        for (File[] file : files){
-           //if (file)
-        }
-    }
+
 }
