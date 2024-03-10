@@ -25,7 +25,7 @@ public class FileProcessingService {
         }
     }
 
-    public static List<File> getFolderNames(String path) {
+    public static void getFolderNames(String path) {
         File dir = new File(path);
         List<File> fileList = new ArrayList<>();
         if (dir.isDirectory()) {
@@ -43,42 +43,7 @@ public class FileProcessingService {
                 }
             }
         }
-        return fileList;
-    }
-
-    //этот метод рабочий, я проверила
-    public static Set<File> sortOrderFiles(List<File> fileList){
-        Set<File> orderFiles = new LinkedHashSet<>();
-        for (File order : fileList){
-            if (order.getName().toLowerCase().matches(Regexp.ORDER_FILE_NAME_REGEXP)){
-                orderFiles.add(order);
-            }else {
-               //TODO записать невалидный файл в другой файл, хотя их вроде нужно переписать из папки дата в новый файл
-            }
-        }
-        return orderFiles;
-    }
-    public static void compileStatisticsOnOrderFiles(Set<File> orderFiles){
-        List<String> amountLines = new ArrayList<>();
-        for (File order : orderFiles){
-            try (BufferedReader reader = new BufferedReader(new FileReader(order))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if (line.toLowerCase().contains("total")){
-                        amountLines.add(line.replace(",",""));
-                    }
-                }
-            }catch (IOException e) {
-                //TODO тут что-то надо делать??
-            }
-        }
-        for (String line : amountLines){
-            Pattern pattern = Pattern.compile(Regexp.SUM_REGEXP);
-            Matcher matcher = pattern.matcher(line);
-            if (matcher.find()) {
-                System.out.println(matcher.group(line));
-            }
-        }
+        System.out.println(fileList);
     }
 }
 
