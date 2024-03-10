@@ -35,7 +35,8 @@ public class Runner {
 //            }
 //        }
 
-        Session session = AuthService.auth("qwerty","TeachMeSkills123");
-        FileProcessingService.processFile(session,"data");
+        //Session session = AuthService.auth("qwerty","TeachMeSkills123");
+       // FileProcessingService.processFile(session,"data");
+        FileProcessingService.compileStatisticsOnOrderFiles(FileProcessingService.sortOrderFiles(FileProcessingService.getFolderNames(PATH_TO_FOLDER)));
     }
 }
