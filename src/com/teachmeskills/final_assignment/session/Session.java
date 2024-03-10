@@ -15,26 +15,29 @@ public final class Session {
         setAccessToken();
         setExpDate();
     }
+
     //TODO какие проверки нужно сделать в isSessionAlive
-    public boolean isSessionAlive(){
+    public boolean isSessionAlive() {
         if (this.accessToken.length() == Consts.ACCESS_TOKEN_LENGTH &&
-                this.expDate.after(new Date())){
+                this.expDate.after(new Date())) {
             return true;
         } else {
             return false;
         }
     }
-    private void setAccessToken(){
+
+    private void setAccessToken() {
         String symbols = "abcdefghijklmnopqrstuvwxyz0123456789";
-        String accessToken = new Random().ints(Consts.ACCESS_TOKEN_LENGTH,0,symbols.length())
-                                         .mapToObj(symbols :: charAt)
-                                         .map(Object :: toString)
-                                         .collect(Collectors.joining());
+        this.accessToken = new Random().ints(Consts.ACCESS_TOKEN_LENGTH, 0, symbols.length())
+                .mapToObj(symbols::charAt)
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
-    private void setExpDate(){
+
+    private void setExpDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, Consts.INACTIVE_INTERVAL);
+        calendar.add(Calendar.MINUTE, 1);
         this.expDate = calendar.getTime();
     }
 }
