@@ -2,6 +2,7 @@ package com.teachmeskills.final_assignment.run;
 
 import com.teachmeskills.final_assignment.service.AuthService;
 import com.teachmeskills.final_assignment.service.FileProcessingService;
+import com.teachmeskills.final_assignment.service.StatisticsService;
 import com.teachmeskills.final_assignment.session.Session;
 
 import java.util.Scanner;
@@ -38,6 +39,7 @@ public class Runner {
 
         Session session = AuthService.auth("qwerty","TeachMeSkills123");
         FileProcessingService.processFile(session,"data");
+        StatisticsService.writeTotalTurnoverOnAllFiles();
 //
 //        FileProcessingService.compileStatisticsOnOrderFiles(FileProcessingService.sortOrderFiles(FileProcessingService.getFolderNames(PATH_TO_FOLDER)));
 //

@@ -8,9 +8,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.PATH_INVALID_FILES;
 import static com.teachmeskills.final_assignment.service.StatisticsService.ValidatorStatistics;
 
 public class FileProcessingService implements Regexp, PathToFolder {
@@ -63,9 +67,9 @@ public class FileProcessingService implements Regexp, PathToFolder {
 
     private static void checkValidFiles(String folderName, List<File> fileList, String regex) {
         List<String> amountLines = new ArrayList<>();
-        for (File order : fileList) {
-            if (order.getName().toLowerCase().matches(regex)) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(order))) {
+        for (File file : fileList) {
+            if (file.getName().toLowerCase().matches(regex)) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (line.toLowerCase().contains("total")) {
@@ -79,7 +83,15 @@ public class FileProcessingService implements Regexp, PathToFolder {
                 } catch (IOException ignore) {
                 }
             } else {
-                //TODO записать невалидный файл в другой файл, хотя их вроде нужно переписать из папки дата в новый файл
+                //TODO метод не записывает в папку
+                Path pathToInvalidFile = Paths.get(PATH_TO_FOLDER);
+                Path pathToFolderInvalidFiles = Paths.get(PATH_INVALID_FILES);
+                try {
+                    Files.move(pathToInvalidFile, pathToFolderInvalidFiles);
+                } catch (IOException e) {
+                    //moving file failed.
+
+                }
             }
         }
 
