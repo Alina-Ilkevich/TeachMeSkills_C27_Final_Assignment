@@ -110,3 +110,7 @@
 [ERROR] -> 2024-03-10 01:52:41 -> The wrong username or password was entered
 			com.teachmeskills.final_assignment.service.AuthService.auth(AuthService.java:27)
 			com.teachmeskills.final_assignment.run.Runner.main(Runner.java:22)
+
+[ERROR] -> 2024-03-10 23:25:45 -> The wrong username or password was entered
+			com.teachmeskills.final_assignment.service.AuthService.auth(AuthService.java:27)
+			com.teachmeskills.final_assignment.run.Runner.main(Runner.java:39)

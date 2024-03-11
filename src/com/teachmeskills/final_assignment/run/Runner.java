@@ -1,14 +1,13 @@
 package com.teachmeskills.final_assignment.run;
 
 import com.teachmeskills.final_assignment.service.AuthService;
-import com.teachmeskills.final_assignment.service.CheckStatistics;
 import com.teachmeskills.final_assignment.service.FileProcessingService;
-import com.teachmeskills.final_assignment.service.OrderStatistics;
 import com.teachmeskills.final_assignment.session.Session;
 
 import java.util.Scanner;
 
 import static com.teachmeskills.final_assignment.consts.PathToFolder.PATH_TO_FOLDER;
+import static com.teachmeskills.final_assignment.service.CurrencyConversionService.currencyConversion;
 
 public class Runner {
     public static void main(String[] args) {
@@ -36,6 +35,12 @@ public class Runner {
 //                count++;
 //            }
 //        }
-        
+
+        Session session = AuthService.auth("qwerty","TeachMeSkills123");
+        FileProcessingService.processFile(session,"data");
+//
+//        FileProcessingService.compileStatisticsOnOrderFiles(FileProcessingService.sortOrderFiles(FileProcessingService.getFolderNames(PATH_TO_FOLDER)));
+//
+//        currencyConversion("GBP","10","checks");
     }
 }
