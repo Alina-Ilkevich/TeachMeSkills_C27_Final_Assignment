@@ -5,11 +5,6 @@ import com.teachmeskills.final_assignment.service.FileProcessingService;
 import com.teachmeskills.final_assignment.service.StatisticsService;
 import com.teachmeskills.final_assignment.session.Session;
 
-import java.util.Scanner;
-
-import static com.teachmeskills.final_assignment.consts.PathToFolder.PATH_TO_FOLDER;
-import static com.teachmeskills.final_assignment.service.CurrencyConversionService.currencyConversion;
-
 public class Runner {
     public static void main(String[] args) {
 

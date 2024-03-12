@@ -8,6 +8,14 @@ import com.teachmeskills.final_assignment.storage.StorageMock;
 
 import java.util.Date;
 
+/**
+ * The method auth is used to authorize the user.
+ * The method accepts the username and password that the user entered into the console.
+ * The method takes the username and password in encoded form from the database,
+ * decodes them and compares them with the username and password entered by the user.
+ * When comparing logins from the database and that the user entered,
+ * the letter case does not matter.
+ */
 public class AuthService {
     public static Session auth(String login, String password) {
         StorageMock storage = new StorageMock();

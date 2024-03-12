@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.teachmeskills.final_assignment.service.CurrencyConversionService.currencyConversion;
+import static com.teachmeskills.final_assignment.service.CurrencyConversionService.convertCurrency;
 
 public class StatisticsService implements PathStatisticsFile {
     static void writeTotalTurnoverOnInvoices(List<String> amountLines, String path) {
@@ -20,11 +20,11 @@ public class StatisticsService implements PathStatisticsFile {
                 Matcher matcher = pattern.matcher(line);
                 if (line.contains("EURO")) {
                     if (matcher.find()) {
-                        totalInvoices += currencyConversion("EURO", matcher.group());
+                        totalInvoices += convertCurrency("EURO", matcher.group());
                     }
                 } else if (line.contains("GBR")) {
                     if (matcher.find()) {
-                        totalInvoices += currencyConversion("GBR", matcher.group());
+                        totalInvoices += convertCurrency("GBR", matcher.group());
                     }
                 } else {
                     if (matcher.find()) {
