@@ -15,7 +15,7 @@ public class Runner {
 
         // login "qwerty", password "TeachMeSkills123"
 
-        //TODO чуть нижу рабочик код закомичен (19-36 строка)
+        //TODO чуть нижу рабочик код закомичен (21-38 строка)
         // для простоты проверки программы
 
 //        int count = 0;
@@ -40,9 +40,6 @@ public class Runner {
         Session session = AuthService.auth("qwerty","TeachMeSkills123");
         FileProcessingService.processFile(session,"data");
         StatisticsService.writeTotalTurnoverOnAllFiles();
-//
-//        FileProcessingService.compileStatisticsOnOrderFiles(FileProcessingService.sortOrderFiles(FileProcessingService.getFolderNames(PATH_TO_FOLDER)));
-//
-//        currencyConversion("GBP","10","checks");
+
     }
 }
