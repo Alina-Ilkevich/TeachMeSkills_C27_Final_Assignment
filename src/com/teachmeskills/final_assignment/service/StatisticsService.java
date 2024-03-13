@@ -12,33 +12,33 @@ import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.*;
 import static com.teachmeskills.final_assignment.service.CurrencyConversionService.convertCurrency;
 
 public class StatisticsService {
-    static void writeTotalTurnoverOnInvoices(List<String> amountLines, String path) {
-        double totalInvoices = 0.0;
+    static void calculateTurnover(List<String> amountLines, String path) {
+        double totalAmount = 0.0;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             for (String line : amountLines) {
                 Pattern pattern = Pattern.compile(Regexp.SUM_REGEXP);
                 Matcher matcher = pattern.matcher(line);
                 if (line.contains("EURO")) {
                     if (matcher.find()) {
-                        totalInvoices += convertCurrency("EURO", matcher.group());
+                        totalAmount += convertCurrency("EURO", matcher.group());
                     }
                 } else if (line.contains("GBR")) {
                     if (matcher.find()) {
-                        totalInvoices += convertCurrency("GBR", matcher.group());
+                        totalAmount += convertCurrency("GBR", matcher.group());
                     }
                 } else {
                     if (matcher.find()) {
-                        totalInvoices += Double.parseDouble(matcher.group());
+                        totalAmount += Double.parseDouble(matcher.group());
                     }
                 }
             }
-            writer.write("The total turnover is " + String.format("%.2f", totalInvoices) + "$" + " in 2023\n");
+            writer.write("The total turnover is " + String.format("%.2f", totalAmount) + "$" + " in 2023\n");
         } catch (IOException e) {
             System.out.println("Writer error");
         }
     }
 
-    public static void writeTotalTurnoverOnAllFiles() {
+    public static void calculateTotalTurnoverOnAllFiles() {
         double totalAmount = 0.0;
         String line;
         Pattern pattern = Pattern.compile(Regexp.SUM_REGEXP);

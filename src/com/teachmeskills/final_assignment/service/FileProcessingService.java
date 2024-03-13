@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.teachmeskills.final_assignment.consts.Regexp.*;
-import static com.teachmeskills.final_assignment.service.StatisticsService.writeTotalTurnoverOnInvoices;
+import static com.teachmeskills.final_assignment.service.StatisticsService.calculateTurnover;
 
 public class FileProcessingService {
     public static void processFile(Session session, String pathToFolder) {
@@ -84,7 +84,7 @@ public class FileProcessingService {
                 } catch (IOException ignore) {
                 }
             }
-            writeTotalTurnoverOnInvoices(amountLines, GetStatisticsPathValidator(key));
+            calculateTurnover(amountLines, GetStatisticsPathValidator(key));
             amountLines.clear();
         });
     }

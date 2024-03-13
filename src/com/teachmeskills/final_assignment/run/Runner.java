@@ -28,7 +28,7 @@ public class Runner {
             Session session = AuthService.auth(login, password);
             if (session != null) {
                 FileProcessingService.processFile(session, PATH_TO_FOLDER);
-                StatisticsService.writeTotalTurnoverOnAllFiles();
+                StatisticsService.calculateTotalTurnoverOnAllFiles();
                 return;
             } else {
                 if (count == 1) return;

@@ -6,6 +6,4 @@ public interface Regexp {
     String ORDER_FILE_NAME_REGEXP = "^2023_order_[\\d]{2}.txt$";
     String SUM_REGEXP = "\\d+(.|,){1}\\d+";
 
-    //TODO в ордерах некоторые файлы повторяются
-    //TODO сделать нечувствительным к регистру в названии файлов
 }

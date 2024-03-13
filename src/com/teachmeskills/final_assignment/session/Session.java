@@ -16,7 +16,6 @@ public final class Session {
         setExpDate();
     }
 
-    //TODO какие проверки нужно сделать в isSessionAlive
     public boolean isSessionAlive() {
         if (this.accessToken.length() == Consts.ACCESS_TOKEN_LENGTH &&
                 this.expDate.after(new Date())) {
