@@ -1,6 +1,5 @@
 package com.teachmeskills.final_assignment.service;
 
-import com.teachmeskills.final_assignment.consts.PathStatisticsFile;
 import com.teachmeskills.final_assignment.consts.Regexp;
 
 import java.io.*;
@@ -9,9 +8,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.*;
 import static com.teachmeskills.final_assignment.service.CurrencyConversionService.convertCurrency;
 
-public class StatisticsService implements PathStatisticsFile {
+public class StatisticsService {
     static void writeTotalTurnoverOnInvoices(List<String> amountLines, String path) {
         double totalInvoices = 0.0;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {

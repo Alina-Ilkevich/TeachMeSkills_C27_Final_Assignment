@@ -1,80 +1,80 @@
 package com.teachmeskills.final_assignment.service;
 
-import com.teachmeskills.final_assignment.consts.PathToFolder;
-import com.teachmeskills.final_assignment.consts.Regexp;
 import com.teachmeskills.final_assignment.session.Session;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.*;
+import static com.teachmeskills.final_assignment.consts.Regexp.*;
 import static com.teachmeskills.final_assignment.service.StatisticsService.writeTotalTurnoverOnInvoices;
-import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 
-public class FileProcessingService implements Regexp, PathToFolder {
+public class FileProcessingService {
     public static void processFile(Session session, String pathToFolder) {
         if (session.isSessionAlive()) {
             System.out.println("live -> ");
-            Validator(Objects.requireNonNull(searchFolderFiles(pathToFolder)));
+            checkValidFiles(searchFolderFiles(pathToFolder));
         } else {
             System.out.println("ne live");
         }
     }
 
     private static Map<String, List<File>> searchFolderFiles(String path) {
+        FileFilter logFilefilter = file -> {
+            if (file.getName().toLowerCase().matches(CHECK_FILE_NAME_REGEXP)) {
+                return true;
+            } else if (file.getName().toLowerCase().matches(INVOICE_FILE_NAME_REGEXP)) {
+                return true;
+            } else if (file.getName().toLowerCase().matches(ORDER_FILE_NAME_REGEXP)) {
+                return true;
+            } else {
+//                Path source = Paths.get(file.getPath());
+//                Path dirInvalidFiles = Paths.get(PATH_INVALID_FILES);
+//                try {
+//                    Files.move(source, dirInvalidFiles.resolve(source.getFileName()), ATOMIC_MOVE);
+//                } catch (IOException ignored) {
+//                }
+                return false;
+            }
+        };
         File dir = new File(path);
+        List<File> files = null;
         Map<String, List<File>> fileList = new HashMap<>();
-        List<File> files;
-        if (!dir.isDirectory()) return null;
         for (File file : Objects.requireNonNull(dir.listFiles())) {
             if (file.isDirectory()) {
-                files = Arrays.stream(Objects.requireNonNull(file.listFiles()))
+                files = Arrays.stream(Objects.requireNonNull(file.listFiles(logFilefilter)))
                         .filter(File::isFile)
                         .collect(Collectors.toList());
-                fileList.put(file.getName(), files);
+                fileList.put(file.getPath(), files);
             }
         }
         return fileList;
     }
 
-    private static void Validator(Map<String, List<File>> folderName) {
-        folderName.forEach((key, value) -> {
-            switch (key) {
-                case "checks": {
-                    System.out.println("\n" + key + "\t folder");
-                    checkValidFiles(key, value, CHECK_FILE_NAME_REGEXP, PATH_TOTAL_TURNOVER_CHECKS);
-                    break;
-                }
-                case "orders": {
-                    System.out.println("\n" + key + "\t folder");
-                    checkValidFiles(key, value, ORDER_FILE_NAME_REGEXP, PATH_TOTAL_TURNOVER_ORDERS);
-                    break;
-                }
-                case "invoices": {
-                    System.out.println("\n" + key + "\t folder");
-                    checkValidFiles(key, value, INVOICE_FILE_NAME_REGEXP, PATH_TOTAL_TURNOVER_INVOICES);
-                    break;
-                }
+    private static String GetStatisticsPathValidator(String pathTotalTurnover) {
+        switch (pathTotalTurnover) {
+            case "data\\invoices" -> {
+                return "statistics/total_turnover_to_invoices.txt";
             }
-        });
+            case "data\\orders" -> {
+                return "statistics/total_turnover_of_orders.txt";
+            }
+            case "data\\checks" -> {
+                return "statistics/total_turnover_checks.txt";
+            }
+        }
+        return pathTotalTurnover;
     }
 
-
-    private static void checkValidFiles(String folderName, List<File> fileList, String regex, String path) {
+    private static void checkValidFiles(Map<String, List<File>> folder) {
         List<String> amountLines = new ArrayList<>();
-        for (File file : fileList) {
-            //logger
-            if (file.getName().toLowerCase().matches(regex)) {
+        folder.forEach((key, value) -> {
+            for (File file : value) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (line.toLowerCase().contains("total")) {
-
-                            if (folderName.equals("checks")) {
+                            if (key.equals("data\\checks")) {
                                 amountLines.add(line.replace(",", "."));
                             } else {
                                 amountLines.add(line.replace(",", ""));
@@ -83,23 +83,9 @@ public class FileProcessingService implements Regexp, PathToFolder {
                     }
                 } catch (IOException ignore) {
                 }
-            } else {
-                //TODO метод не записывает в папку
-                Path source = Paths.get(file.getPath());
-                Path dirInvalidFiles = Paths.get(PATH_INVALID_FILES);
-                try {
-                    //logger
-                    Files.move(source, dirInvalidFiles.resolve(source.getFileName()), ATOMIC_MOVE);
-                    //logger
-                } catch (IOException ignored) {
-                }
             }
-        }
-
-        amountLines.forEach(System.out::println);
-        System.out.println("_----------------------------------_");
-        writeTotalTurnoverOnInvoices(amountLines, path);
+            writeTotalTurnoverOnInvoices(amountLines, GetStatisticsPathValidator(key));
+            amountLines.clear();
+        });
     }
 }
-
-
