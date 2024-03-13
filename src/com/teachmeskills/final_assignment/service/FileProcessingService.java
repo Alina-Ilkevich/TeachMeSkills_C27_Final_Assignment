@@ -51,7 +51,7 @@ public class FileProcessingService {
         return fileList;
     }
 
-    private static String GetStatisticsPathValidator(String pathTotalTurnover) {
+    private static String getStatisticsPathValidator(String pathTotalTurnover) {
         switch (pathTotalTurnover) {
             case "data\\invoices" -> {
                 return "statistics/total_turnover_to_invoices.txt";
@@ -84,7 +84,7 @@ public class FileProcessingService {
                 } catch (IOException ignore) {
                 }
             }
-            calculateTurnover(amountLines, GetStatisticsPathValidator(key));
+            calculateTurnover(amountLines, getStatisticsPathValidator(key));
             amountLines.clear();
         });
     }
