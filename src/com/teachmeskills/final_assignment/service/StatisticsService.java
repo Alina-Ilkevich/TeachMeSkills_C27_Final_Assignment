@@ -42,8 +42,8 @@ public class StatisticsService {
             }
             writer.write("The total turnover is " + String.format("%.2f", totalAmount) + "$" + " in 2023\n");
         } catch (IOException e) {
-            System.out.println("Не у далось найти путь к файлу");
-            Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
+            System.out.println("Неудалось найти путь к файлу");
+            Logger.logError(new Date(),"Неудалось найти путь к файлу",e);
         }
         Logger.logInfo(new Date(),"end calculating turnover - " + "\"calculateTurnover\"");
     }
@@ -73,14 +73,14 @@ public class StatisticsService {
                     }
                 }
             } catch (IOException e) {
-                Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
+                Logger.logError(new Date(),"Неудалось найти путь к файлу",e);
             }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_TOTAL_TURNOVER_YEAR))) {
             writer.write("The total turnover of orders, invoices and checks is " + String.format("%.2f", totalAmount) + "$" + " in 2023\n");
         } catch (IOException e) {
-            Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
+            Logger.logError(new Date(),"Неудалось найти путь к файлу",e);
         }
         Logger.logInfo(new Date(),"end calculating the total turnover for all files - " + "\"calculateTotalTurnoverOnAllFiles\"");
     }

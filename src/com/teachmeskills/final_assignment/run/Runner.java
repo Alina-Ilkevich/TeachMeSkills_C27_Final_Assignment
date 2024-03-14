@@ -25,7 +25,6 @@ public class Runner {
                 System.out.print("Введите путь к папке - ");
                 String path = scanner.nextLine();
                 FileProcessingService.processFile(session, path);
-                StatisticsService.calculateTotalTurnoverOnAllFiles();
                 return;
             } else {
                 if (count == 1) return;

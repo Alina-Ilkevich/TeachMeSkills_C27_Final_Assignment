@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.*;
 import static com.teachmeskills.final_assignment.consts.Regexp.*;
 import static com.teachmeskills.final_assignment.service.StatisticsService.calculateTurnover;
 
@@ -19,6 +20,7 @@ public class FileProcessingService {
     public static void processFile(Session session, String pathToFolder) {
         if (session.isSessionAlive()) {
             checkValidFiles(searchFolderFiles(pathToFolder));
+            StatisticsService.calculateTotalTurnoverOnAllFiles();
         } else {
             Logger.logInfo(new Date(),"закончилось время session, повторите автризацию");
             System.out.println("закончилось время session, повторите автризацию");
@@ -76,13 +78,13 @@ public class FileProcessingService {
     private static String getStatisticsPathValidator(String pathTotalTurnover) {
         switch (pathTotalTurnover) {
             case "data\\invoices" -> {
-                return "statistics/total_turnover_to_invoices.txt";
+                return PATH_TOTAL_TURNOVER_INVOICES;
             }
             case "data\\orders" -> {
-                return "statistics/total_turnover_of_orders.txt";
+                return PATH_TOTAL_TURNOVER_ORDERS;
             }
             case "data\\checks" -> {
-                return "statistics/total_turnover_checks.txt";
+                return PATH_TOTAL_TURNOVER_CHECKS;
             }
         }
         return pathTotalTurnover;
