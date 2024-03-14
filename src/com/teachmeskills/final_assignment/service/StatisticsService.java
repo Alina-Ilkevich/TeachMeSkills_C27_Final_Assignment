@@ -14,6 +14,11 @@ import static com.teachmeskills.final_assignment.consts.PathStatisticsFile.*;
 import static com.teachmeskills.final_assignment.service.CurrencyConversionService.convertCurrency;
 
 public class StatisticsService {
+    /**
+     *The method calculateTurnover accepts as input the collection amountLines from the method
+     * checkValidFiles in which the monthly turnover is written, converts to dollars, calculates the total
+     * turnover for each type of document and statistics are recorded in the corresponding file.
+     */
     static void calculateTurnover(List<String> amountLines, String path) {
         Logger.logInfo(new Date(),"start calculating turnover - " + "\"calculateTurnover\"");
         double totalAmount = 0.0;
@@ -43,6 +48,10 @@ public class StatisticsService {
         Logger.logInfo(new Date(),"end calculating turnover - " + "\"calculateTurnover\"");
     }
 
+    /**
+     * The method calculateTotalTurnoverOnAllFiles reads information from files with final statistics for each
+     * type of document, summarizes and records in a file the total turnover for the year for all documents.
+     */
     public static void calculateTotalTurnoverOnAllFiles() {
         Logger.logInfo(new Date(),"started calculating the total turnover for all files - " + "\"calculateTotalTurnoverOnAllFiles\"");
         double totalAmount = 0.0;

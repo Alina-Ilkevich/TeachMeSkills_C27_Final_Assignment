@@ -5,7 +5,6 @@ import com.teachmeskills.final_assignment.consts.CurrencyCode;
 
 import java.util.HashMap;
 import java.util.Map;
-//TODO дописать комментарий
 
 /**
  * The method convertCurrency is used to convert euros and pounds into dollars.
