@@ -1,7 +1,5 @@
 package com.teachmeskills.final_assignment.logger;
 
-import com.teachmeskills.final_assignment.consts.PathLoggerFile;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +9,9 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Logger implements PathLoggerFile {
+import static com.teachmeskills.final_assignment.consts.PathLoggerFile.*;
+
+public class Logger{
     public static void logInfo(Date date, String infoMessage) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateToLog = simpleDateFormat.format(date);

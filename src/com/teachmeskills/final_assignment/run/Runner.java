@@ -7,15 +7,10 @@ import com.teachmeskills.final_assignment.session.Session;
 
 import java.util.Scanner;
 
-import static com.teachmeskills.final_assignment.consts.PathToFolder.PATH_TO_FOLDER;
-
 public class Runner {
     public static void main(String[] args) {
 
-        // login "qwerty", password "TeachMeSkills123"
-
-        //TODO чуть нижу рабочик код закомичен (21-38 строка)
-        // для простоты проверки программы
+        // login - "qwerty", password - "TeachMeSkills123", path - "data"
 
         int count = 0;
         Scanner scanner = new Scanner(System.in);
@@ -25,9 +20,11 @@ public class Runner {
             String login = scanner.nextLine();
             System.out.print("Пароль - ");
             String password = scanner.nextLine();
-            Session session = AuthService.auth(login, password);
+            Session session = AuthService.auth(login.replace(" ",""), password.replace(" ",""));
             if (session != null) {
-                FileProcessingService.processFile(session, PATH_TO_FOLDER);
+                System.out.print("Введите путь к папке - ");
+                String path = scanner.nextLine();
+                FileProcessingService.processFile(session, path);
                 StatisticsService.calculateTotalTurnoverOnAllFiles();
                 return;
             } else {
@@ -36,10 +33,5 @@ public class Runner {
                 count++;
             }
         }
-
-//        Session session = AuthService.auth("qwerty","TeachMeSkills123");
-//        FileProcessingService.processFile(session,"data");
-
-
     }
 }

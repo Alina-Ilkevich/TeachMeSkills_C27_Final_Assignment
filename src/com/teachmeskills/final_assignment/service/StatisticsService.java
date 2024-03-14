@@ -1,9 +1,11 @@
 package com.teachmeskills.final_assignment.service;
 
 import com.teachmeskills.final_assignment.consts.Regexp;
+import com.teachmeskills.final_assignment.logger.Logger;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,7 @@ import static com.teachmeskills.final_assignment.service.CurrencyConversionServi
 
 public class StatisticsService {
     static void calculateTurnover(List<String> amountLines, String path) {
+        Logger.logInfo(new Date(),"start calculating turnover - " + "\"calculateTurnover\"");
         double totalAmount = 0.0;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             for (String line : amountLines) {
@@ -34,11 +37,14 @@ public class StatisticsService {
             }
             writer.write("The total turnover is " + String.format("%.2f", totalAmount) + "$" + " in 2023\n");
         } catch (IOException e) {
-            System.out.println("Writer error");
+            System.out.println("Не у далось найти путь к файлу");
+            Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
         }
+        Logger.logInfo(new Date(),"end calculating turnover - " + "\"calculateTurnover\"");
     }
 
     public static void calculateTotalTurnoverOnAllFiles() {
+        Logger.logInfo(new Date(),"started calculating the total turnover for all files - " + "\"calculateTotalTurnoverOnAllFiles\"");
         double totalAmount = 0.0;
         String line;
         Pattern pattern = Pattern.compile(Regexp.SUM_REGEXP);
@@ -58,14 +64,15 @@ public class StatisticsService {
                     }
                 }
             } catch (IOException e) {
-
+                Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
             }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_TOTAL_TURNOVER_YEAR))) {
             writer.write("The total turnover of orders, invoices and checks is " + String.format("%.2f", totalAmount) + "$" + " in 2023\n");
         } catch (IOException e) {
-
+            Logger.logError(new Date(),"Не у далось найти путь к файлу",e);
         }
+        Logger.logInfo(new Date(),"end calculating the total turnover for all files - " + "\"calculateTotalTurnoverOnAllFiles\"");
     }
 }
